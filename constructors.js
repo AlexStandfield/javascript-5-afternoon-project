@@ -14,6 +14,10 @@
   The values for the make and model will come from two parameters, make and model (in that order).
 */
 
+function CarFactory(make, model){
+  this.make = make
+  this.model = model
+}
 // Code here
 
 ////////// PROBLEM 2 //////////
@@ -32,7 +36,7 @@ function Employee(name, email, hireDate) {
   Invoke the constructor function above and pass in 'Bob', 'bob@gmail.com', and '01-02-98' as arguments.
   Assign the result of the invocation to a variable called bob.
 */
-
+const bob = new Employee('Bob', 'bob@gmail.com', '01-02-98')
 // Code here
 
 ////////// PROBLEM 3 //////////
@@ -56,6 +60,18 @@ mustang.moveCar(); // Increments mustang' move property by 10. Returns the new m
     invoking moveCar on the right object (prius vs mustang).
 */
 
+function Car(make, model, year){
+  this.make = make
+  this.model = model
+  this.year = year
+
+  let moveProperty = 0
+  Car.prototype.moveCar = function(){
+    let newMoveProperty = moveProperty += 10
+    return newMoveProperty
+  }
+}
+
 // Code here
 
 ////////// PROBLEM 4 //////////
@@ -74,6 +90,10 @@ function Movie(name, genre, rating) {
   this.genre = genre;
   this.rating = rating;
 }
+Movie.prototype.changeRating = function(num){
+  this.rating = (this.rating + num) / 2
+  return this.rating
+}
 
 // Code here
 
@@ -83,6 +103,15 @@ function Movie(name, genre, rating) {
 
 // Once the User constructor function is created, write a prototype method for the User function. Name this method addSavedPost. It should take in three parameters: id (a number), title (a string) and rating (a number). Use these parameters to create a new object and add it to the savedPosts array. Make sure to name the properties the same as described previously (id, title, rating).
 
+function User(name, age, email, savedPosts){
+  this.name = name
+  this.age = age
+  this.email = email
+  this.savedPosts = savedPosts
+}
+User.prototype.addSavedPost = function(id, title, rating){
+  this.savedPosts.push({id, title, rating})
+}
 // Code here
 
 ////////// PROBLEM 6 //////////
@@ -90,6 +119,9 @@ function Movie(name, genre, rating) {
 // You will be using the constructor function you just created in problem 5.
 // Write a prototype method for the User constructor function named removeSavedPost that will take in one number parameter representing the post id. Use this id to find and remove the matching object in the savedPosts array.
 
+User.prototype.removeSavedPost = function(id){
+  this.savedPosts = this.savedPosts.filter(e => e.id !== id)
+}
 // Code here
 
 ////////// PROBLEM 7 //////////
@@ -97,4 +129,7 @@ function Movie(name, genre, rating) {
 // You will continue to use the constructor function you created in problem 5.
 // Write a prototype method for the User constructor function named changePostRating that will take in two number parameters. The first will be an id (a number) and the second will be the new rating (a number). Use the id to find the matching object in the savedPosts array. Once you find the matching object, update it's rating score with the new rating parameter.
 
+User.prototype.changePostRating = function(id, num) {
+  this.savedPosts.map(e => e.id === id ? e.rating = num : null)
+}
 // Code here
